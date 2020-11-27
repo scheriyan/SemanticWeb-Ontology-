@@ -1,0 +1,1626 @@
+@prefix : <http://www.semanticweb.org/sherin/movies.owl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix movies: <http://www.semanticweb.org/sherin/movies.owl#> .
+@base <http://www.semanticweb.org/sherin/movies.owl> .
+
+<http://www.semanticweb.org/sherin/movies.owl> rdf:type owl:Ontology ;
+                                                rdfs:comment """Movie Ontology Fall 2020:Sherin Cheriyan
+Classifying movies based on a criteria to simplify the movie search process""" .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/sherin/movies.owl#CastedIn
+movies:CastedIn rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf owl:topObjectProperty ;
+                owl:inverseOf movies:castIs ;
+                rdf:type owl:TransitiveProperty .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#actorCastedIn
+movies:actorCastedIn rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf movies:CastedIn ;
+                     owl:inverseOf movies:actorIs ;
+                     rdfs:domain movies:movieActor ;
+                     rdfs:range movies:Movie ;
+                     owl:propertyDisjointWith movies:actressCastedIn .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#actorIs
+movies:actorIs rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf movies:castIs ;
+               rdfs:domain movies:Movie ;
+               rdfs:range movies:movieActor .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#actressCastedIn
+movies:actressCastedIn rdf:type owl:ObjectProperty ;
+                       rdfs:subPropertyOf movies:CastedIn ;
+                       owl:inverseOf movies:actressIs ;
+                       rdfs:domain movies:movieActress ;
+                       rdfs:range movies:Movie .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#actressIs
+movies:actressIs rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf movies:castIs ;
+                 rdfs:domain movies:Movie ;
+                 rdfs:range movies:movieActress .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#castIs
+movies:castIs rdf:type owl:ObjectProperty ,
+                       owl:TransitiveProperty .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#directed
+movies:directed rdf:type owl:ObjectProperty ;
+                owl:inverseOf movies:isDirectedBy ;
+                rdf:type owl:FunctionalProperty ;
+                rdfs:domain <http://www.semanticweb.org/sherin/movies.owll#movieDirector> ;
+                rdfs:range movies:Movie .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#isDirectedBy
+movies:isDirectedBy rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf owl:topObjectProperty ;
+                    rdfs:domain movies:Movie ;
+                    rdfs:range <http://www.semanticweb.org/sherin/movies.owll#movieDirector> .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#isProducedBy
+movies:isProducedBy rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf owl:topObjectProperty ;
+                    owl:inverseOf movies:produced ;
+                    rdfs:domain movies:Movie ;
+                    rdfs:range movies:movieProducer .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#produced
+movies:produced rdf:type owl:ObjectProperty ,
+                         owl:FunctionalProperty ;
+                rdfs:domain movies:movieProducer ;
+                rdfs:range movies:Movie .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/sherin/movies.owl#durationInMinutes
+movies:durationInMinutes rdf:type owl:DatatypeProperty ;
+                         rdfs:subPropertyOf owl:topDataProperty ;
+                         rdf:type owl:FunctionalProperty .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#name
+movies:name rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf owl:topDataProperty .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#viewerRating
+movies:viewerRating rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf owl:topDataProperty .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#yearReleasedIn
+movies:yearReleasedIn rdf:type owl:DatatypeProperty ;
+                      rdfs:subPropertyOf owl:topDataProperty ;
+                      rdf:type owl:FunctionalProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/sherin/movies.ow#ActionMovie
+<http://www.semanticweb.org/sherin/movies.ow#ActionMovie> rdf:type owl:Class ;
+                                                          rdfs:subClassOf movies:TypeOfMovie .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#AdamMckay
+movies:AdamMckay rdf:type owl:Class ;
+                 rdfs:subClassOf <http://www.semanticweb.org/sherin/movies.owll#movieDirector> ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty movies:directed ;
+                                   owl:someValuesFrom movies:StepBrothers
+                                 ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#AlisonWilliams
+movies:AlisonWilliams rdf:type owl:Class ;
+                      rdfs:subClassOf movies:movieActress ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty movies:actressCastedIn ;
+                                        owl:someValuesFrom movies:GetOut
+                                      ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#AlvaroAugustin
+movies:AlvaroAugustin rdf:type owl:Class ;
+                      rdfs:subClassOf movies:movieProducer ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty movies:produced ;
+                                        owl:someValuesFrom movies:TheImpossible
+                                      ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#AmazingGrace
+movies:AmazingGrace rdf:type owl:Class ;
+                    rdfs:subClassOf movies:DocumentaryMovie ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:actorIs ;
+                                      owl:someValuesFrom movies:JamesCleveland
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:actressIs ;
+                                      owl:someValuesFrom movies:ArethraFranklin
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:isDirectedBy ;
+                                      owl:someValuesFrom movies:SydneyPollack
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:isProducedBy ;
+                                      owl:someValuesFrom movies:JoeBoyd
+                                    ] ;
+                    owl:disjointWith movies:Amy .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#Amy
+movies:Amy rdf:type owl:Class ;
+           rdfs:subClassOf movies:DocumentaryMovie ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty movies:actorIs ;
+                             owl:someValuesFrom movies:TylerJames
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty movies:actressIs ;
+                             owl:someValuesFrom movies:AmyWinehouse
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty movies:isDirectedBy ;
+                             owl:someValuesFrom movies:AsifKapadia
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty movies:isProducedBy ;
+                             owl:someValuesFrom movies:JamesGayRees
+                           ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#AmyWinehouse
+movies:AmyWinehouse rdf:type owl:Class ;
+                    rdfs:subClassOf movies:movieActress ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:actressCastedIn ;
+                                      owl:someValuesFrom movies:Amy
+                                    ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#AnimationMovie
+movies:AnimationMovie rdf:type owl:Class ;
+                      rdfs:subClassOf movies:TypeOfMovie .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#AnneHathaway
+movies:AnneHathaway rdf:type owl:Class ;
+                    rdfs:subClassOf movies:movieActress ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:actressCastedIn ;
+                                      owl:someValuesFrom movies:DarkWaters
+                                    ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#Annie
+movies:Annie rdf:type owl:Class ;
+             rdfs:subClassOf movies:HorrorMovie ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty movies:actorIs ;
+                               owl:someValuesFrom movies:MichaelFahr
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty movies:actressIs ;
+                               owl:someValuesFrom movies:MellisaDaddio
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty movies:isDirectedBy ;
+                               owl:someValuesFrom movies:JosephMazzafemo
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty movies:isProducedBy ;
+                               owl:someValuesFrom movies:WillSmith
+                             ] ;
+             owl:disjointWith movies:GetOut .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#AnniePotts
+movies:AnniePotts rdf:type owl:Class ;
+                  rdfs:subClassOf movies:movieActress ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty movies:actressCastedIn ;
+                                    owl:someValuesFrom movies:ToyStory
+                                  ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#AnthonyRusso
+movies:AnthonyRusso rdf:type owl:Class ;
+                    rdfs:subClassOf <http://www.semanticweb.org/sherin/movies.owll#movieDirector> ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:directed ;
+                                      owl:someValuesFrom movies:Avengers
+                                    ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#ArethraFranklin
+movies:ArethraFranklin rdf:type owl:Class ;
+                       rdfs:subClassOf movies:movieActress ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty movies:actressCastedIn ;
+                                         owl:someValuesFrom movies:AmazingGrace
+                                       ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#AsifKapadia
+movies:AsifKapadia rdf:type owl:Class ;
+                   rdfs:subClassOf <http://www.semanticweb.org/sherin/movies.owll#movieDirector> ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:directed ;
+                                     owl:someValuesFrom movies:Amy
+                                   ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#Avengers
+movies:Avengers rdf:type owl:Class ;
+                rdfs:subClassOf movies:SciFiMovie ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty movies:actorIs ;
+                                  owl:someValuesFrom movies:RobertDowneyJr
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty movies:actressIs ;
+                                  owl:someValuesFrom movies:ScarletJohannson
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty movies:isDirectedBy ;
+                                  owl:someValuesFrom movies:AnthonyRusso
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty movies:isProducedBy ;
+                                  owl:someValuesFrom movies:KevinFeige
+                                ] ;
+                owl:disjointWith movies:BlackPanther .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#BillWalsh
+movies:BillWalsh rdf:type owl:Class ;
+                 rdfs:subClassOf movies:movieProducer ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty movies:produced ;
+                                   owl:someValuesFrom movies:MaryPoppins
+                                 ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#BlackPanther
+movies:BlackPanther rdf:type owl:Class ;
+                    rdfs:subClassOf movies:SciFiMovie ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:actorIs ;
+                                      owl:someValuesFrom movies:ChadwickBoseman
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:actressIs ;
+                                      owl:someValuesFrom movies:LopitaNyongo
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:isDirectedBy ;
+                                      owl:someValuesFrom movies:RyanCoogler
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:isProducedBy ;
+                                      owl:someValuesFrom movies:KevinFeige
+                                    ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#BonnieArnold
+movies:BonnieArnold rdf:type owl:Class ;
+                    rdfs:subClassOf movies:movieProducer ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:produced ;
+                                      owl:someValuesFrom movies:ToyStory
+                                    ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#BradBird
+movies:BradBird rdf:type owl:Class ;
+                rdfs:subClassOf <http://www.semanticweb.org/sherin/movies.owll#movieDirector> ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty movies:directed ;
+                                  owl:someValuesFrom movies:Incredibles
+                                ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#Cast
+movies:Cast rdf:type owl:Class ;
+            rdfs:subClassOf movies:Movie .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#ChadwickBoseman
+movies:ChadwickBoseman rdf:type owl:Class ;
+                       rdfs:subClassOf movies:movieActor ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty movies:actorCastedIn ;
+                                         owl:someValuesFrom movies:BlackPanther
+                                       ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#ChrisBuck
+movies:ChrisBuck rdf:type owl:Class ;
+                 rdfs:subClassOf <http://www.semanticweb.org/sherin/movies.owll#movieDirector> ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty movies:directed ;
+                                   owl:someValuesFrom movies:Frozen
+                                 ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#ComedyMovie
+movies:ComedyMovie rdf:type owl:Class ;
+                   rdfs:subClassOf movies:TypeOfMovie .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#CraigNelson
+movies:CraigNelson rdf:type owl:Class ;
+                   rdfs:subClassOf movies:movieActor ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:actorCastedIn ;
+                                     owl:someValuesFrom movies:Incredibles
+                                   ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#Crew
+movies:Crew rdf:type owl:Class ;
+            rdfs:subClassOf movies:Movie .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#DafneKeen
+movies:DafneKeen rdf:type owl:Class ;
+                 rdfs:subClassOf movies:movieActress ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty movies:actressCastedIn ;
+                                   owl:someValuesFrom movies:Logan
+                                 ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#DamienChazelle
+movies:DamienChazelle rdf:type owl:Class ;
+                      rdfs:subClassOf <http://www.semanticweb.org/sherin/movies.owll#movieDirector> ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty movies:directed ;
+                                        owl:someValuesFrom movies:LaLaLand
+                                      ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#DanielKaluuya
+movies:DanielKaluuya rdf:type owl:Class ;
+                     rdfs:subClassOf movies:movieActor ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty movies:actorCastedIn ;
+                                       owl:someValuesFrom movies:GetOut
+                                     ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#DarkWaters
+movies:DarkWaters rdf:type owl:Class ;
+                  rdfs:subClassOf movies:ThrillerMovie ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty movies:actorIs ;
+                                    owl:someValuesFrom movies:MarkRuffalo
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty movies:actressIs ;
+                                    owl:someValuesFrom movies:AnneHathaway
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty movies:isDirectedBy ;
+                                    owl:someValuesFrom movies:ToddHaynes
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty movies:isProducedBy ;
+                                    owl:someValuesFrom movies:MarkRuffalo
+                                  ] ;
+                  owl:disjointWith movies:TheImpossible .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#DavidDobkin
+movies:DavidDobkin rdf:type owl:Class ;
+                   rdfs:subClassOf <http://www.semanticweb.org/sherin/movies.owll#movieDirector> ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:directed ;
+                                     owl:someValuesFrom movies:WeddingCrashers
+                                   ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#DavidTomlinson
+movies:DavidTomlinson rdf:type owl:Class ;
+                      rdfs:subClassOf movies:movieActor ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty movies:actorCastedIn ;
+                                        owl:someValuesFrom movies:MaryPoppins
+                                      ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#DocumentaryMovie
+movies:DocumentaryMovie rdf:type owl:Class ;
+                        rdfs:subClassOf movies:TypeOfMovie .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#DramaMovie
+movies:DramaMovie rdf:type owl:Class ;
+                  rdfs:subClassOf movies:TypeOfMovie .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#EmmaStone
+movies:EmmaStone rdf:type owl:Class ;
+                 rdfs:subClassOf movies:movieActress ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty movies:actressCastedIn ;
+                                   owl:someValuesFrom movies:LaLaLand
+                                 ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#EvanMcgregor
+movies:EvanMcgregor rdf:type owl:Class ;
+                    rdfs:subClassOf movies:movieActor ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:actorCastedIn ;
+                                      owl:someValuesFrom movies:TheImpossible
+                                    ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#FredBerger
+movies:FredBerger rdf:type owl:Class ;
+                  rdfs:subClassOf movies:movieProducer ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty movies:produced ;
+                                    owl:someValuesFrom movies:LaLaLand
+                                  ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#Frozen
+movies:Frozen rdf:type owl:Class ;
+              rdfs:subClassOf movies:AnimationMovie ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty movies:actorIs ;
+                                owl:someValuesFrom movies:JohnathonGoff
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty movies:actressIs ;
+                                owl:someValuesFrom movies:KristenBell
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty movies:isDirectedBy ;
+                                owl:someValuesFrom movies:ChrisBuck
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty movies:isProducedBy ;
+                                owl:someValuesFrom movies:PeterDelvecho
+                              ] ;
+              owl:disjointWith movies:ToyStory .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#GetOut
+movies:GetOut rdf:type owl:Class ;
+              rdfs:subClassOf movies:HorrorMovie ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty movies:actorIs ;
+                                owl:someValuesFrom movies:DanielKaluuya
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty movies:actressIs ;
+                                owl:someValuesFrom movies:AlisonWilliams
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty movies:isDirectedBy ;
+                                owl:someValuesFrom movies:JordanPeele
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty movies:isProducedBy ;
+                                owl:someValuesFrom movies:SeanMckittnick
+                              ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#HollyHunter
+movies:HollyHunter rdf:type owl:Class ;
+                   rdfs:subClassOf movies:movieActress ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:actressCastedIn ;
+                                     owl:someValuesFrom movies:Incredibles
+                                   ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#HorrorMovie
+movies:HorrorMovie rdf:type owl:Class ;
+                   rdfs:subClassOf movies:TypeOfMovie .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#HughJackMan
+movies:HughJackMan rdf:type owl:Class ;
+                   rdfs:subClassOf movies:movieActor ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:actorCastedIn ;
+                                     owl:someValuesFrom movies:Logan
+                                   ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#HutchParker
+movies:HutchParker rdf:type owl:Class ;
+                   rdfs:subClassOf movies:movieProducer ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:produced ;
+                                     owl:someValuesFrom movies:Logan
+                                   ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#Incredibles
+movies:Incredibles rdf:type owl:Class ;
+                   rdfs:subClassOf <http://www.semanticweb.org/sherin/movies.ow#ActionMovie> ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:actorIs ;
+                                     owl:someValuesFrom movies:CraigNelson
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:actressIs ;
+                                     owl:someValuesFrom movies:HollyHunter
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:isDirectedBy ;
+                                     owl:someValuesFrom movies:BradBird
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:isProducedBy ;
+                                     owl:someValuesFrom movies:JohnWalker
+                                   ] ;
+                   owl:disjointWith movies:JurassicPark .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#JaBayona
+movies:JaBayona rdf:type owl:Class ;
+                rdfs:subClassOf <http://www.semanticweb.org/sherin/movies.owll#movieDirector> ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty movies:directed ;
+                                  owl:someValuesFrom movies:TheImpossible
+                                ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#JamesCameron
+movies:JamesCameron rdf:type owl:Class ;
+                    rdfs:subClassOf <http://www.semanticweb.org/sherin/movies.owll#movieDirector> ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:directed ;
+                                      owl:someValuesFrom movies:Titanic
+                                    ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#JamesCleveland
+movies:JamesCleveland rdf:type owl:Class ;
+                      rdfs:subClassOf movies:movieActor ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty movies:actorCastedIn ;
+                                        owl:someValuesFrom movies:AmazingGrace
+                                      ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#JamesGayRees
+movies:JamesGayRees rdf:type owl:Class ;
+                    rdfs:subClassOf movies:movieProducer ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:produced ;
+                                      owl:someValuesFrom movies:Amy
+                                    ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#JamesMangold
+movies:JamesMangold rdf:type owl:Class ;
+                    rdfs:subClassOf <http://www.semanticweb.org/sherin/movies.owll#movieDirector> ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:directed ;
+                                      owl:someValuesFrom movies:Logan
+                                    ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#JoeBoyd
+movies:JoeBoyd rdf:type owl:Class ;
+               rdfs:subClassOf movies:movieProducer ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty movies:produced ;
+                                 owl:someValuesFrom movies:AmazingGrace
+                               ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#JohnLandau
+movies:JohnLandau rdf:type owl:Class ;
+                  rdfs:subClassOf movies:movieProducer ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty movies:produced ;
+                                    owl:someValuesFrom movies:Titanic
+                                  ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#JohnLasseter
+movies:JohnLasseter rdf:type owl:Class ;
+                    rdfs:subClassOf <http://www.semanticweb.org/sherin/movies.owll#movieDirector> ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:directed ;
+                                      owl:someValuesFrom movies:ToyStory
+                                    ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#JohnWalker
+movies:JohnWalker rdf:type owl:Class ;
+                  rdfs:subClassOf movies:movieProducer ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty movies:produced ;
+                                    owl:someValuesFrom movies:Incredibles
+                                  ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#JohnathonGoff
+movies:JohnathonGoff rdf:type owl:Class ;
+                     rdfs:subClassOf movies:movieActor ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty movies:actorCastedIn ;
+                                       owl:someValuesFrom movies:Frozen
+                                     ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#JordanPeele
+movies:JordanPeele rdf:type owl:Class ;
+                   rdfs:subClassOf <http://www.semanticweb.org/sherin/movies.owll#movieDirector> ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:directed ;
+                                     owl:someValuesFrom movies:GetOut
+                                   ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#JosephMazzafemo
+movies:JosephMazzafemo rdf:type owl:Class ;
+                       rdfs:subClassOf <http://www.semanticweb.org/sherin/movies.owll#movieDirector> ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty movies:directed ;
+                                         owl:someValuesFrom movies:Annie
+                                       ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#JuddApatow
+movies:JuddApatow rdf:type owl:Class ;
+                  rdfs:subClassOf movies:movieProducer ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty movies:produced ;
+                                    owl:someValuesFrom movies:StepBrothers
+                                  ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#JulieAndrews
+movies:JulieAndrews rdf:type owl:Class ;
+                    rdfs:subClassOf movies:movieActress ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:actressCastedIn ;
+                                      owl:someValuesFrom movies:MaryPoppins
+                                    ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#JurassicPark
+movies:JurassicPark rdf:type owl:Class ;
+                    rdfs:subClassOf <http://www.semanticweb.org/sherin/movies.ow#ActionMovie> ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:actorIs ;
+                                      owl:someValuesFrom movies:SamNeill
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:actressIs ;
+                                      owl:someValuesFrom movies:LauraDern
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:isDirectedBy ;
+                                      owl:someValuesFrom movies:StevenSpielberg
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:isProducedBy ;
+                                      owl:someValuesFrom movies:KathleenKennedy
+                                    ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#KateWinslet
+movies:KateWinslet rdf:type owl:Class ;
+                   rdfs:subClassOf movies:movieActress ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:actressCastedIn ;
+                                     owl:someValuesFrom movies:Titanic
+                                   ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#KathleenKennedy
+movies:KathleenKennedy rdf:type owl:Class ;
+                       rdfs:subClassOf movies:movieProducer ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty movies:produced ;
+                                         owl:someValuesFrom movies:JurassicPark
+                                       ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#KevinFeige
+movies:KevinFeige rdf:type owl:Class ;
+                  rdfs:subClassOf movies:movieProducer ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty movies:produced ;
+                                    owl:someValuesFrom movies:Avengers
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty movies:produced ;
+                                    owl:someValuesFrom movies:BlackPanther
+                                  ] ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty movies:produced ;
+                                    owl:allValuesFrom [ rdf:type owl:Class ;
+                                                        owl:unionOf ( movies:Avengers
+                                                                      movies:BlackPanther
+                                                                    )
+                                                      ]
+                                  ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#KristenBell
+movies:KristenBell rdf:type owl:Class ;
+                   rdfs:subClassOf movies:movieActress ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:actressCastedIn ;
+                                     owl:someValuesFrom movies:Frozen
+                                   ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#LaLaLand
+movies:LaLaLand rdf:type owl:Class ;
+                rdfs:subClassOf movies:MusicalMovie ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty movies:actorIs ;
+                                  owl:someValuesFrom movies:DamienChazelle
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty movies:actressIs ;
+                                  owl:someValuesFrom movies:EmmaStone
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty movies:isDirectedBy ;
+                                  owl:someValuesFrom movies:DamienChazelle
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty movies:isProducedBy ;
+                                  owl:someValuesFrom movies:FredBerger
+                                ] ;
+                owl:disjointWith movies:MaryPoppins .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#LauraDern
+movies:LauraDern rdf:type owl:Class ;
+                 rdfs:subClassOf movies:movieActress ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty movies:actressCastedIn ;
+                                   owl:someValuesFrom movies:JurassicPark
+                                 ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#LeonardoDicaprio
+movies:LeonardoDicaprio rdf:type owl:Class ;
+                        rdfs:subClassOf movies:movieActor ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty movies:actorCastedIn ;
+                                          owl:someValuesFrom movies:Titanic
+                                        ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#Logan
+movies:Logan rdf:type owl:Class ;
+             rdfs:subClassOf movies:DramaMovie ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty movies:actorIs ;
+                               owl:someValuesFrom movies:HughJackMan
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty movies:actressIs ;
+                               owl:someValuesFrom movies:DafneKeen
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty movies:isDirectedBy ;
+                               owl:someValuesFrom movies:JamesMangold
+                             ] ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty movies:isProducedBy ;
+                               owl:someValuesFrom movies:HutchParker
+                             ] ;
+             owl:disjointWith movies:Spotlight .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#LopitaNyongo
+movies:LopitaNyongo rdf:type owl:Class ;
+                    rdfs:subClassOf movies:movieActress ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:actressCastedIn ;
+                                      owl:someValuesFrom movies:BlackPanther
+                                    ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#LynnHarris
+movies:LynnHarris rdf:type owl:Class ;
+                  rdfs:subClassOf movies:movieProducer ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty movies:produced ;
+                                    owl:someValuesFrom movies:TheNotebook
+                                  ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#MarkRuffalo
+movies:MarkRuffalo rdf:type owl:Class ;
+                   rdfs:subClassOf movies:movieActor ,
+                                   movies:movieProducer ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:actorCastedIn ;
+                                     owl:someValuesFrom movies:DarkWaters
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:actorCastedIn ;
+                                     owl:someValuesFrom movies:Spotlight
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:produced ;
+                                     owl:someValuesFrom movies:DarkWaters
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:actorCastedIn ;
+                                     owl:allValuesFrom [ rdf:type owl:Class ;
+                                                         owl:unionOf ( movies:DarkWaters
+                                                                       movies:Spotlight
+                                                                     )
+                                                       ]
+                                   ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#MaryPoppins
+movies:MaryPoppins rdf:type owl:Class ;
+                   rdfs:subClassOf movies:MusicalMovie ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:actorIs ;
+                                     owl:someValuesFrom movies:DavidTomlinson
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:actressIs ;
+                                     owl:someValuesFrom movies:JulieAndrews
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:isDirectedBy ;
+                                     owl:someValuesFrom movies:RobertStevenson
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:isProducedBy ;
+                                     owl:someValuesFrom movies:BillWalsh
+                                   ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#MarySteenburgen
+movies:MarySteenburgen rdf:type owl:Class ;
+                       rdfs:subClassOf movies:movieActress ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty movies:actressCastedIn ;
+                                         owl:someValuesFrom movies:StepBrothers
+                                       ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#MellisaDaddio
+movies:MellisaDaddio rdf:type owl:Class ;
+                     rdfs:subClassOf movies:movieActress ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty movies:actressCastedIn ;
+                                       owl:someValuesFrom movies:Annie
+                                     ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#MichaelFahr
+movies:MichaelFahr rdf:type owl:Class ;
+                   rdfs:subClassOf movies:movieActor ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:actorCastedIn ;
+                                     owl:someValuesFrom movies:Annie
+                                   ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#Movie
+movies:Movie rdf:type owl:Class ;
+             rdfs:subClassOf owl:Thing .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#MusicalMovie
+movies:MusicalMovie rdf:type owl:Class ;
+                    rdfs:subClassOf movies:TypeOfMovie .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#NaomiWatts
+movies:NaomiWatts rdf:type owl:Class ;
+                  rdfs:subClassOf movies:movieActress ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty movies:actressCastedIn ;
+                                    owl:someValuesFrom movies:TheImpossible
+                                  ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#NickCassavetes
+movies:NickCassavetes rdf:type owl:Class ;
+                      rdfs:subClassOf <http://www.semanticweb.org/sherin/movies.owll#movieDirector> ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty movies:directed ;
+                                        owl:someValuesFrom movies:TheNotebook
+                                      ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#OwenWilson
+movies:OwenWilson rdf:type owl:Class ;
+                  rdfs:subClassOf movies:movieActor ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty movies:actorCastedIn ;
+                                    owl:someValuesFrom movies:WeddingCrashers
+                                  ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#PeterAbrams
+movies:PeterAbrams rdf:type owl:Class ;
+                   rdfs:subClassOf movies:movieProducer ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:produced ;
+                                     owl:someValuesFrom movies:WeddingCrashers
+                                   ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#PeterDelvecho
+movies:PeterDelvecho rdf:type owl:Class ;
+                     rdfs:subClassOf movies:movieProducer ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty movies:produced ;
+                                       owl:someValuesFrom movies:Frozen
+                                     ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#RachelMcadams
+movies:RachelMcadams rdf:type owl:Class ;
+                     rdfs:subClassOf movies:movieActress ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty movies:actressCastedIn ;
+                                       owl:someValuesFrom movies:Spotlight
+                                     ] ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty movies:actressCastedIn ;
+                                       owl:someValuesFrom movies:TheNotebook
+                                     ] ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty movies:actressCastedIn ;
+                                       owl:someValuesFrom movies:WeddingCrashers
+                                     ] ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty movies:actressCastedIn ;
+                                       owl:allValuesFrom [ rdf:type owl:Class ;
+                                                           owl:unionOf ( movies:Spotlight
+                                                                         movies:TheNotebook
+                                                                         movies:WeddingCrashers
+                                                                       )
+                                                         ]
+                                     ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#RobertDowneyJr
+movies:RobertDowneyJr rdf:type owl:Class ;
+                      rdfs:subClassOf movies:movieActor ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty movies:actorCastedIn ;
+                                        owl:someValuesFrom movies:Avengers
+                                      ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#RobertStevenson
+movies:RobertStevenson rdf:type owl:Class ;
+                       rdfs:subClassOf <http://www.semanticweb.org/sherin/movies.owll#movieDirector> ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty movies:directed ;
+                                         owl:someValuesFrom movies:MaryPoppins
+                                       ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#RomanceMovie
+movies:RomanceMovie rdf:type owl:Class ;
+                    rdfs:subClassOf movies:TypeOfMovie .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#RyanCoogler
+movies:RyanCoogler rdf:type owl:Class ;
+                   rdfs:subClassOf <http://www.semanticweb.org/sherin/movies.owll#movieDirector> ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:directed ;
+                                     owl:someValuesFrom movies:BlackPanther
+                                   ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#RyanGosling
+movies:RyanGosling rdf:type owl:Class ;
+                   rdfs:subClassOf movies:movieActor ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:actorCastedIn ;
+                                     owl:someValuesFrom movies:LaLaLand
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:actorCastedIn ;
+                                     owl:someValuesFrom movies:TheNotebook
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:actorCastedIn ;
+                                     owl:allValuesFrom [ rdf:type owl:Class ;
+                                                         owl:unionOf ( movies:LaLaLand
+                                                                       movies:TheNotebook
+                                                                     )
+                                                       ]
+                                   ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#SamNeill
+movies:SamNeill rdf:type owl:Class ;
+                rdfs:subClassOf movies:movieActor ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty movies:actorCastedIn ;
+                                  owl:someValuesFrom movies:JurassicPark
+                                ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#ScarletJohannson
+movies:ScarletJohannson rdf:type owl:Class ;
+                        rdfs:subClassOf movies:movieActress ,
+                                        [ rdf:type owl:Restriction ;
+                                          owl:onProperty movies:actressCastedIn ;
+                                          owl:someValuesFrom movies:Avengers
+                                        ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#SciFiMovie
+movies:SciFiMovie rdf:type owl:Class ;
+                  rdfs:subClassOf movies:TypeOfMovie .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#SeanMckittnick
+movies:SeanMckittnick rdf:type owl:Class ;
+                      rdfs:subClassOf movies:movieProducer ,
+                                      [ rdf:type owl:Restriction ;
+                                        owl:onProperty movies:produced ;
+                                        owl:someValuesFrom movies:GetOut
+                                      ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#Spotlight
+movies:Spotlight rdf:type owl:Class ;
+                 rdfs:subClassOf movies:DramaMovie ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty movies:actorIs ;
+                                   owl:someValuesFrom movies:MarkRuffalo
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty movies:actressIs ;
+                                   owl:someValuesFrom movies:RachelMcadams
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty movies:isDirectedBy ;
+                                   owl:someValuesFrom movies:TomMccarthy
+                                 ] ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty movies:isProducedBy ;
+                                   owl:someValuesFrom movies:SteveGolin
+                                 ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#StepBrothers
+movies:StepBrothers rdf:type owl:Class ;
+                    rdfs:subClassOf movies:ComedyMovie ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:actorIs ;
+                                      owl:someValuesFrom movies:WillFerrel
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:actressIs ;
+                                      owl:someValuesFrom movies:MarySteenburgen
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:isDirectedBy ;
+                                      owl:someValuesFrom movies:AdamMckay
+                                    ] ,
+                                    [ rdf:type owl:Restriction ;
+                                      owl:onProperty movies:isProducedBy ;
+                                      owl:someValuesFrom movies:JuddApatow
+                                    ] ;
+                    owl:disjointWith movies:WeddingCrashers .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#SteveFaber
+movies:SteveFaber rdf:type owl:Class ;
+                  rdfs:subClassOf movies:movieActor .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#SteveGolin
+movies:SteveGolin rdf:type owl:Class ;
+                  rdfs:subClassOf movies:movieProducer ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty movies:produced ;
+                                    owl:someValuesFrom movies:Spotlight
+                                  ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#StevenSpielberg
+movies:StevenSpielberg rdf:type owl:Class ;
+                       rdfs:subClassOf <http://www.semanticweb.org/sherin/movies.owll#movieDirector> ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty movies:directed ;
+                                         owl:someValuesFrom movies:JurassicPark
+                                       ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#SydneyPollack
+movies:SydneyPollack rdf:type owl:Class ;
+                     rdfs:subClassOf <http://www.semanticweb.org/sherin/movies.owll#movieDirector> ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty movies:directed ;
+                                       owl:someValuesFrom movies:AmazingGrace
+                                     ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#TheImpossible
+movies:TheImpossible rdf:type owl:Class ;
+                     rdfs:subClassOf movies:ThrillerMovie ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty movies:actorIs ;
+                                       owl:someValuesFrom movies:EvanMcgregor
+                                     ] ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty movies:actressIs ;
+                                       owl:someValuesFrom movies:NaomiWatts
+                                     ] ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty movies:isDirectedBy ;
+                                       owl:someValuesFrom movies:JaBayona
+                                     ] ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty movies:isProducedBy ;
+                                       owl:someValuesFrom movies:AlvaroAugustin
+                                     ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#TheNotebook
+movies:TheNotebook rdf:type owl:Class ;
+                   rdfs:subClassOf movies:RomanceMovie ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:actorIs ;
+                                     owl:someValuesFrom movies:RyanGosling
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:actressIs ;
+                                     owl:someValuesFrom movies:RachelMcadams
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:isDirectedBy ;
+                                     owl:someValuesFrom movies:NickCassavetes
+                                   ] ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:isProducedBy ;
+                                     owl:someValuesFrom movies:LynnHarris
+                                   ] ;
+                   owl:disjointWith movies:Titanic .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#ThrillerMovie
+movies:ThrillerMovie rdf:type owl:Class ;
+                     rdfs:subClassOf movies:TypeOfMovie .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#Titanic
+movies:Titanic rdf:type owl:Class ;
+               rdfs:subClassOf movies:RomanceMovie ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty movies:actorIs ;
+                                 owl:someValuesFrom movies:LeonardoDicaprio
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty movies:actressIs ;
+                                 owl:someValuesFrom movies:KateWinslet
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty movies:isDirectedBy ;
+                                 owl:someValuesFrom movies:JamesCameron
+                               ] ,
+                               [ rdf:type owl:Restriction ;
+                                 owl:onProperty movies:isProducedBy ;
+                                 owl:someValuesFrom movies:JohnLandau
+                               ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#ToddHaynes
+movies:ToddHaynes rdf:type owl:Class ;
+                  rdfs:subClassOf <http://www.semanticweb.org/sherin/movies.owll#movieDirector> ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty movies:directed ;
+                                    owl:someValuesFrom movies:DarkWaters
+                                  ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#TomHanks
+movies:TomHanks rdf:type owl:Class ;
+                rdfs:subClassOf movies:movieActor ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty movies:actorCastedIn ;
+                                  owl:someValuesFrom movies:ToyStory
+                                ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#TomMccarthy
+movies:TomMccarthy rdf:type owl:Class ;
+                   rdfs:subClassOf <http://www.semanticweb.org/sherin/movies.owll#movieDirector> ,
+                                   [ rdf:type owl:Restriction ;
+                                     owl:onProperty movies:directed ;
+                                     owl:someValuesFrom movies:Spotlight
+                                   ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#ToyStory
+movies:ToyStory rdf:type owl:Class ;
+                rdfs:subClassOf movies:AnimationMovie ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty movies:actorIs ;
+                                  owl:someValuesFrom movies:TomHanks
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty movies:actressIs ;
+                                  owl:someValuesFrom movies:AnniePotts
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty movies:isDirectedBy ;
+                                  owl:someValuesFrom movies:JohnLasseter
+                                ] ,
+                                [ rdf:type owl:Restriction ;
+                                  owl:onProperty movies:isProducedBy ;
+                                  owl:someValuesFrom movies:BonnieArnold
+                                ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#TylerJames
+movies:TylerJames rdf:type owl:Class ;
+                  rdfs:subClassOf movies:movieActor ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty movies:actorCastedIn ;
+                                    owl:someValuesFrom movies:Amy
+                                  ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#TypeOfMovie
+movies:TypeOfMovie rdf:type owl:Class ;
+                   rdfs:subClassOf movies:Movie .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#WeddingCrashers
+movies:WeddingCrashers rdf:type owl:Class ;
+                       rdfs:subClassOf movies:ComedyMovie ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty movies:actorIs ;
+                                         owl:someValuesFrom movies:OwenWilson
+                                       ] ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty movies:actressIs ;
+                                         owl:someValuesFrom movies:RachelMcadams
+                                       ] ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty movies:isDirectedBy ;
+                                         owl:someValuesFrom movies:DavidDobkin
+                                       ] ,
+                                       [ rdf:type owl:Restriction ;
+                                         owl:onProperty movies:isProducedBy ;
+                                         owl:someValuesFrom movies:PeterAbrams
+                                       ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#WillFerrel
+movies:WillFerrel rdf:type owl:Class ;
+                  rdfs:subClassOf movies:movieActor ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty movies:actorCastedIn ;
+                                    owl:someValuesFrom movies:StepBrothers
+                                  ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#WillSmith
+movies:WillSmith rdf:type owl:Class ;
+                 rdfs:subClassOf movies:movieProducer ,
+                                 [ rdf:type owl:Restriction ;
+                                   owl:onProperty movies:produced ;
+                                   owl:someValuesFrom movies:Annie
+                                 ] .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#movieActor
+movies:movieActor rdf:type owl:Class ;
+                  rdfs:subClassOf movies:Cast ;
+                  owl:disjointWith movies:movieActress .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#movieActress
+movies:movieActress rdf:type owl:Class ;
+                    rdfs:subClassOf movies:Cast .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#movieProducer
+movies:movieProducer rdf:type owl:Class ;
+                     rdfs:subClassOf movies:Crew .
+
+
+###  http://www.semanticweb.org/sherin/movies.owll#movieDirector
+<http://www.semanticweb.org/sherin/movies.owll#movieDirector> rdf:type owl:Class ;
+                                                              rdfs:subClassOf movies:Crew .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/sherin/movies.owl#AmazingGraceMovie
+movies:AmazingGraceMovie rdf:type owl:NamedIndividual ,
+                                  movies:AmazingGrace ;
+                         movies:durationInMinutes "89.0"^^xsd:double ;
+                         movies:viewerRating "7.5"^^xsd:double ;
+                         movies:yearReleasedIn "2018"^^xsd:int .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#AmyMovie
+movies:AmyMovie rdf:type owl:NamedIndividual ,
+                         movies:Amy ;
+                movies:durationInMinutes "128.0"^^xsd:double ;
+                movies:viewerRating "7.8"^^xsd:double ;
+                movies:yearReleasedIn "2015"^^xsd:int .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#AnnieMovie
+movies:AnnieMovie rdf:type owl:NamedIndividual ,
+                           movies:Annie ;
+                  movies:durationInMinutes "80.0"^^xsd:double ;
+                  movies:viewerRating "4.3"^^xsd:double ;
+                  movies:yearReleasedIn 2014 .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#AvengersMovie
+movies:AvengersMovie rdf:type owl:NamedIndividual ,
+                              movies:Avengers ;
+                     movies:durationInMinutes "181.0"^^xsd:double ;
+                     movies:viewerRating "8.4"^^xsd:double ;
+                     movies:yearReleasedIn "2019"^^xsd:int .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#BlackPantherMovie
+movies:BlackPantherMovie rdf:type owl:NamedIndividual ,
+                                  movies:BlackPanther ;
+                         movies:durationInMinutes "134.0"^^xsd:double ;
+                         movies:viewerRating "7.3"^^xsd:double ;
+                         movies:yearReleasedIn "2018"^^xsd:int .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#DarkWatersMovie
+movies:DarkWatersMovie rdf:type owl:NamedIndividual ,
+                                movies:DarkWaters ;
+                       movies:durationInMinutes "126.0"^^xsd:double ;
+                       movies:viewerRating "7.6"^^xsd:double ;
+                       movies:yearReleasedIn "2019"^^xsd:int .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#FrozenMovie
+movies:FrozenMovie rdf:type owl:NamedIndividual ,
+                            movies:Frozen ;
+                   movies:durationInMinutes "102.0"^^xsd:double ;
+                   movies:viewerRating "7.4"^^xsd:double ;
+                   movies:yearReleasedIn "2013"^^xsd:int .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#GetOutMovie
+movies:GetOutMovie rdf:type owl:NamedIndividual ,
+                            movies:GetOut ;
+                   movies:durationInMinutes "104.0"^^xsd:double ;
+                   movies:viewerRating "7.7"^^xsd:double ;
+                   movies:yearReleasedIn "2017"^^xsd:int .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#IncrediblesMovie
+movies:IncrediblesMovie rdf:type owl:NamedIndividual ,
+                                 movies:Incredibles ;
+                        movies:durationInMinutes "116.0"^^xsd:double ;
+                        movies:viewerRating "8.0"^^xsd:double ;
+                        movies:yearReleasedIn "2004"^^xsd:int .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#JurrasicParkMovie
+movies:JurrasicParkMovie rdf:type owl:NamedIndividual ,
+                                  movies:JurassicPark ;
+                         movies:durationInMinutes "127.0"^^xsd:double ;
+                         movies:viewerRating "8.1"^^xsd:double ;
+                         movies:yearReleasedIn "1993"^^xsd:int .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#LalaLandMovie
+movies:LalaLandMovie rdf:type owl:NamedIndividual ,
+                              movies:LaLaLand ;
+                     movies:durationInMinutes "128.0"^^xsd:double ;
+                     movies:viewerRating "8.0"^^xsd:double ;
+                     movies:yearReleasedIn "2016"^^xsd:int .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#LoganMovie
+movies:LoganMovie rdf:type owl:NamedIndividual ,
+                           movies:Logan ;
+                  movies:durationInMinutes "137.0"^^xsd:double ;
+                  movies:viewerRating "8.1"^^xsd:double ;
+                  movies:yearReleasedIn "2017"^^xsd:int .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#MarryPoppinsMovie
+movies:MarryPoppinsMovie rdf:type owl:NamedIndividual ,
+                                  movies:MaryPoppins ;
+                         movies:durationInMinutes "134.0"^^xsd:double ;
+                         movies:viewerRating "7.8"^^xsd:double ;
+                         movies:yearReleasedIn "1964"^^xsd:int .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#SpotlightMovie
+movies:SpotlightMovie rdf:type owl:NamedIndividual ,
+                               movies:Spotlight ;
+                      movies:durationInMinutes "129.0"^^xsd:double ;
+                      movies:viewerRating "8.1"^^xsd:double ;
+                      movies:yearReleasedIn 2015 .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#StepBrothersMovie
+movies:StepBrothersMovie rdf:type owl:NamedIndividual ,
+                                  movies:StepBrothers ;
+                         movies:durationInMinutes "106.0"^^xsd:double ;
+                         movies:viewerRating "6.9"^^xsd:double ;
+                         movies:yearReleasedIn "2008"^^xsd:int .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#TheImpossibleMovie
+movies:TheImpossibleMovie rdf:type owl:NamedIndividual ,
+                                   movies:TheImpossible ;
+                          movies:durationInMinutes "113.0"^^xsd:double ;
+                          movies:viewerRating "7.6"^^xsd:double ;
+                          movies:yearReleasedIn "2012"^^xsd:int .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#TheNotebookMovie
+movies:TheNotebookMovie rdf:type owl:NamedIndividual ,
+                                 movies:TheNotebook ;
+                        movies:durationInMinutes "123.0"^^xsd:double ;
+                        movies:viewerRating "7.8"^^xsd:double ;
+                        movies:yearReleasedIn "2004"^^xsd:int .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#TitanicMovie
+movies:TitanicMovie rdf:type owl:NamedIndividual ,
+                             movies:Titanic ;
+                    movies:durationInMinutes "194.0"^^xsd:double ;
+                    movies:viewerRating "7.8"^^xsd:double ;
+                    movies:yearReleasedIn "1997"^^xsd:int .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#ToyStoryMovie
+movies:ToyStoryMovie rdf:type owl:NamedIndividual ,
+                              movies:ToyStory ;
+                     movies:durationInMinutes "81.0"^^xsd:double ;
+                     movies:viewerRating "8.3"^^xsd:double ;
+                     movies:yearReleasedIn "1995"^^xsd:int .
+
+
+###  http://www.semanticweb.org/sherin/movies.owl#WeddingCrashersMovie
+movies:WeddingCrashersMovie rdf:type owl:NamedIndividual ,
+                                     movies:WeddingCrashers ;
+                            movies:durationInMinutes "119.0"^^xsd:double ;
+                            movies:viewerRating "6.9"^^xsd:double ;
+                            movies:yearReleasedIn "2005"^^xsd:int .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( <http://www.semanticweb.org/sherin/movies.ow#ActionMovie>
+                movies:AnimationMovie
+                movies:ComedyMovie
+                movies:DocumentaryMovie
+                movies:DramaMovie
+                movies:HorrorMovie
+                movies:MusicalMovie
+                movies:RomanceMovie
+                movies:SciFiMovie
+                movies:ThrillerMovie
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( movies:AdamMckay
+                movies:AnthonyRusso
+                movies:AsifKapadia
+                movies:BradBird
+                movies:ChrisBuck
+                movies:DamienChazelle
+                movies:DavidDobkin
+                movies:JaBayona
+                movies:JamesCameron
+                movies:JamesMangold
+                movies:JohnLasseter
+                movies:JordanPeele
+                movies:JosephMazzafemo
+                movies:NickCassavetes
+                movies:RobertStevenson
+                movies:RyanCoogler
+                movies:StevenSpielberg
+                movies:SydneyPollack
+                movies:ToddHaynes
+                movies:TomMccarthy
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( movies:AlisonWilliams
+                movies:AmyWinehouse
+                movies:AnneHathaway
+                movies:AnniePotts
+                movies:ArethraFranklin
+                movies:DafneKeen
+                movies:EmmaStone
+                movies:HollyHunter
+                movies:JulieAndrews
+                movies:KateWinslet
+                movies:KristenBell
+                movies:LauraDern
+                movies:LopitaNyongo
+                movies:MarySteenburgen
+                movies:MellisaDaddio
+                movies:NaomiWatts
+                movies:RachelMcadams
+                movies:ScarletJohannson
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( movies:ChadwickBoseman
+                movies:CraigNelson
+                movies:DanielKaluuya
+                movies:DavidTomlinson
+                movies:EvanMcgregor
+                movies:HughJackMan
+                movies:JamesCleveland
+                movies:JohnathonGoff
+                movies:LeonardoDicaprio
+                movies:MarkRuffalo
+                movies:MichaelFahr
+                movies:OwenWilson
+                movies:RobertDowneyJr
+                movies:RyanGosling
+                movies:SamNeill
+                movies:SteveFaber
+                movies:TomHanks
+                movies:TylerJames
+                movies:WillFerrel
+              )
+] .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
