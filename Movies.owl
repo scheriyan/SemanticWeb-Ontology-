@@ -787,7 +787,7 @@ movies:LaLaLand rdf:type owl:Class ;
                 rdfs:subClassOf movies:MusicalMovie ,
                                 [ rdf:type owl:Restriction ;
                                   owl:onProperty movies:actorIs ;
-                                  owl:someValuesFrom movies:DamienChazelle
+                                  owl:someValuesFrom movies:RyanGosling
                                 ] ,
                                 [ rdf:type owl:Restriction ;
                                   owl:onProperty movies:actressIs ;
@@ -1145,11 +1145,6 @@ movies:StepBrothers rdf:type owl:Class ;
                     owl:disjointWith movies:WeddingCrashers .
 
 
-###  http://www.semanticweb.org/sherin/movies.owl#SteveFaber
-movies:SteveFaber rdf:type owl:Class ;
-                  rdfs:subClassOf movies:movieActor .
-
-
 ###  http://www.semanticweb.org/sherin/movies.owl#SteveGolin
 movies:SteveGolin rdf:type owl:Class ;
                   rdfs:subClassOf movies:movieProducer ,
@@ -1393,7 +1388,7 @@ movies:AnnieMovie rdf:type owl:NamedIndividual ,
                            movies:Annie ;
                   movies:durationInMinutes "80.0"^^xsd:double ;
                   movies:viewerRating "4.3"^^xsd:double ;
-                  movies:yearReleasedIn 2014 .
+                  movies:yearReleasedIn "2014"^^xsd:int .
 
 
 ###  http://www.semanticweb.org/sherin/movies.owl#AvengersMovie
@@ -1600,6 +1595,30 @@ movies:WeddingCrashersMovie rdf:type owl:NamedIndividual ,
 
 
 [ rdf:type owl:AllDisjointClasses ;
+  owl:members ( movies:AlvaroAugustin
+                movies:BillWalsh
+                movies:BonnieArnold
+                movies:FredBerger
+                movies:HutchParker
+                movies:JamesGayRees
+                movies:JoeBoyd
+                movies:JohnLandau
+                movies:JohnWalker
+                movies:JuddApatow
+                movies:KathleenKennedy
+                movies:KevinFeige
+                movies:LynnHarris
+                movies:MarkRuffalo
+                movies:PeterAbrams
+                movies:PeterDelvecho
+                movies:SeanMckittnick
+                movies:SteveGolin
+                movies:WillSmith
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
   owl:members ( movies:ChadwickBoseman
                 movies:CraigNelson
                 movies:DanielKaluuya
@@ -1615,7 +1634,6 @@ movies:WeddingCrashersMovie rdf:type owl:NamedIndividual ,
                 movies:RobertDowneyJr
                 movies:RyanGosling
                 movies:SamNeill
-                movies:SteveFaber
                 movies:TomHanks
                 movies:TylerJames
                 movies:WillFerrel
